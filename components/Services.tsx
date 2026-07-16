@@ -4,7 +4,7 @@ const services = [
     id: "01",
     title: "Web Development",
     description:
-      "Strony i Aplikacje Webowe. Szybkie, bezpieczne i zopymalizowane pod kątem konwersji landing page oraz zaawansowane aplikacje webowe oparte o architekturze Next.js.",
+      "Strony i Aplikacje Webowe. Szybkie, bezpieczne i zoptymalizowane pod kątem konwersji strony wizytówkowe oraz zaawansowane aplikacje webowe oparte na architekturze Next.js.",
   },
   {
     id: "02",
@@ -22,7 +22,7 @@ const services = [
     id: "04",
     title: "AI Agents & Bots",
     description:
-      "Autonomiczne Agenty i Chatboty. Projektowanie inteligentnych asystentów nowej generacji. Buduję systemy oparte o LLM, które potrafią same analizować zapytania, korzystać z zewnętrznych narzędzi i automatyzować obsługę klienta.",
+      "Autonomiczne Agenty i Chatboty. Projektowanie inteligentnych asystentów nowej generacji. Buduję systemy oparte o LLM, które potrafią same analizować zapytania, rozumieć kontekst oraz korzystać z zewnętrznych narzędzi i automatyzować obsługę klienta.",
   },
 ];
 
