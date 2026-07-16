@@ -39,7 +39,7 @@ export default function Navbar() {
           </li>
           <li>
             <a href="#kontakt" className="nav-link" onClick={closeMenu}>
-              Uruchom bota
+              Uruchom chatbota
             </a>
           </li>
         </ul>
