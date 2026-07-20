@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic-settings
+redis
+langgraph
+langgraph-checkpoint-redis
+langchain-openai
+langchain-chroma
+langchain-core
+chromadb
+pypdf
