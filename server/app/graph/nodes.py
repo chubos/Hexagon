@@ -31,3 +31,44 @@ def all_fields_collected(state: AgentState) -> bool:
     return len(missing_fields(state)) == 0
 
 EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
+
+class Extracted(BaseModel):
+    intent: Literal["faq", "intake", "unknown"]
+    project_type: str | None = None
+    budget: str | None = None
+    email: str | None = None
+    description: str | None = None
+
+def get_llm():
+    return ChatOpenAI(model="gpt-4o-mini", api_key=settings.openai_api_key, temperature=0)
+
+def latest_user_message(state: AgentState) -> str:
+    for msg in reversed(state["messages"]):
+        if isinstance(msg, HumanMessage):
+            return msg.content.strip()
+    return ""
+
+def extract_node(state: AgentState) -> dict:
+    user_text = latest_user_message(state)
+    updates: dict = {"last_intent": "intake"}
+    email_match = re.search(r"[\w.+-]+@[\w.-]+\.\w+", user_text)
+    if email_match and EMAIL_RE.match(email_match.group(0)):
+        updates["email"] = email_match.group(0)
+    llm = get_llm().with_structured_output(Extracted)
+    prompt = f"""
+Wyciągnij dane leada z wiadomości użytkownika (po polsku).
+Uzupełnij tylko pola, które wynikają wprost z tekstu.
+intent:
+- faq = pytanie o usługi/działalność/ceny/lokalizację
+- intake = użytkownik podaje dane projektu lub odpowiada na pytania
+- unknown = niejasne
+Wiadomość:
+{user_text}
+"""
+    extracted: Extracted = llm.invoke(prompt)
+    updates["last_intent"] = extracted.intent
+    for field in REQUIRED_FIELDS:
+        value = getattr(extracted, field)
+        if value and not state.get(field):
+            updates[field] = value.strip()
+    return updates
