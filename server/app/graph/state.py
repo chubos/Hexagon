@@ -1,12 +1,15 @@
 from typing import Annotated, Literal, TypedDict
 
 from langgraph.graph.message import add_messages
+from typing_extensions import NotRequired
+
 
 class AgentState(TypedDict):
     messages: Annotated[list, add_messages]
-    project_type: str | None
-    budget: str | None
-    email: str | None
-    description: str | None
-    lead_saved: bool
-    last_intent: Literal["faq", "intake", "unknown"]
+    session_id: NotRequired[str]
+    project_type: NotRequired[str | None]
+    budget: NotRequired[str | None]
+    email: NotRequired[str | None]
+    description: NotRequired[str | None]
+    lead_saved: NotRequired[bool]
+    last_intent: NotRequired[Literal["faq", "intake", "unknown"]]

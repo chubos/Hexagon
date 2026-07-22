@@ -20,7 +20,12 @@ def ingest_pdf() -> None:
 
     Path(settings.chroma_path).mkdir(parents=True, exist_ok=True)
 
-    Chroma.from_documents(documents=chunks, embedding=OpenAIEmbeddings(), persist_directory=settings.chroma_path, collection_name="hexagon_knowledge")
+    Chroma.from_documents(
+        documents=chunks,
+        embedding=OpenAIEmbeddings(api_key=settings.openai_api_key),
+        persist_directory=settings.chroma_path,
+        collection_name="hexagon_knowledge",
+    )
     print(f"Zindeksowano {len(chunks)} fragmentów do Chroma.")
 
 if __name__ == "__main__":

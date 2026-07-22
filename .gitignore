@@ -9,10 +9,13 @@ client/.next/
 client/out/
 
 # python
-server/__pycache__/
-server/*.py[cod]
+__pycache__/
+*.py[cod]
+*$py.class
 server/.pytest_cache/
 server/.mypy_cache/
+server/data/chroma/
+server/data/leads/
 
 # misc
 .DS_Store

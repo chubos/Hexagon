@@ -58,15 +58,22 @@ def extract_node(state: AgentState) -> dict:
     prompt = f"""
 Wyciągnij dane leada z wiadomości użytkownika (po polsku).
 Uzupełnij tylko pola, które wynikają wprost z tekstu.
+
 intent:
-- faq = pytanie o usługi/działalność/ceny/lokalizację
-- intake = użytkownik podaje dane projektu lub odpowiada na pytania
-- unknown = niejasne
+- faq = WYŁĄCZNIE pytanie o freelancera, usługi, doświadczenie, lokalizację, sposób współpracy
+- intake = podaje dane projektu, budżet, e-mail, opis LUB odpowiada na pytania z briefu
+- unknown = traktuj jak intake
+
+Zasada: jeśli użytkownik podaje informacje o projekcie (np. typ, budżet, e-mail), intent MUSI być intake, nie faq.
+
 Wiadomość:
 {user_text}
 """
     extracted: Extracted = llm.invoke(prompt)
-    updates["last_intent"] = extracted.intent
+    intent = extracted.intent
+    if intent == "unknown":
+        intent = "intake"
+    updates["last_intent"] = intent
     for field in REQUIRED_FIELDS:
         value = getattr(extracted, field)
         if value and not state.get(field):
@@ -77,16 +84,23 @@ def faq_node(state: AgentState) -> dict:
     question = latest_user_message(state)
     context = retrieve_context(question)
 
+    if not context.strip():
+        answer = (
+            "Na to pytanie nie mam jeszcze gotowej odpowiedzi w materiałach. "
+            "Chętnie odpowiem osobiście — możesz też napisać przez LinkedIn."
+        )
+        return {"messages": [AIMessage(content=answer)]}
+
     system = SystemMessage(
         content=(
             "Odpowiadasz po polsku jako asystent freelancera IT. "
-            "Używaj TYLKO kontekstu z PDF. Jeśli brak info, powiedz to wprost."
+            "Używaj kontekstu z PDF. Jeśli kontekst nie zawiera odpowiedzi, "
+            "powiedz krótko że nie wiesz — nie wymyślaj faktów."
         )
     )
     human = HumanMessage(
-        content=f"Pytanie: {question}\n\nKontekst z bazy wiedzy:\n{context or '(brak)'}"
+        content=f"Pytanie: {question}\n\nKontekst z bazy wiedzy:\n{context}"
     )
-
     answer = get_llm().invoke([system, human]).content
     return {"messages": [AIMessage(content=answer)]}
 
@@ -128,24 +142,15 @@ def save_lead_node(state: AgentState) -> dict:
         ],
     }
 
+def route_intake_status(state: AgentState) -> str:
+    if all_fields_collected(state):
+        if not state.get("lead_saved"):
+            return "save"
+        return "end"
+    return "ask"
+
+
 def route_after_extract(state: AgentState) -> str:
     if state.get("last_intent") == "faq":
         return "faq"
-    return "intake"
-
-def route_after_faq(state: AgentState) -> str:
-    if all_fields_collected(state):
-        if not state.get("lead_saved"):
-            return "save"
-        return "end"
-    return "ask"
-
-def route_after_intake(state: AgentState) -> str:
-    if all_fields_collected(state):
-        if not state.get("lead_saved"):
-            return "save"
-        return "end"
-    return "ask"
-
-def route_after_save(state: AgentState) -> str:
-    return "end"
+    return route_intake_status(state)
