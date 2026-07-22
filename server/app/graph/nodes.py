@@ -72,3 +72,20 @@ Wiadomość:
         if value and not state.get(field):
             updates[field] = value.strip()
     return updates
+
+def faq_node(state: AgentState) -> dict:
+    question = latest_user_message(state)
+    context = retrieve_context(question)
+
+    system = SystemMessage(
+        content=(
+            "Odpowiadasz po polsku jako asystent freelancera IT. "
+            "Używaj TYLKO kontekstu z PDF. Jeśli brak info, powiedz to wprost."
+        )
+    )
+    human = HumanMessage(
+        content=f"Pytanie: {question}\n\nKontekst z bazy wiedzy:\n{context or '(brak)'}"
+    )
+
+    answer = get_llm().invoke([system, human]).content
+    return {"messages": [AIMessage(content=answer)]}
