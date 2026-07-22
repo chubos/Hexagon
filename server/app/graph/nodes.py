@@ -127,3 +127,25 @@ def save_lead_node(state: AgentState) -> dict:
             )
         ],
     }
+
+def route_after_extract(state: AgentState) -> str:
+    if state.get("last_intent") == "faq":
+        return "faq"
+    return "intake"
+
+def route_after_faq(state: AgentState) -> str:
+    if all_fields_collected(state):
+        if not state.get("lead_saved"):
+            return "save"
+        return "end"
+    return "ask"
+
+def route_after_intake(state: AgentState) -> str:
+    if all_fields_collected(state):
+        if not state.get("lead_saved"):
+            return "save"
+        return "end"
+    return "ask"
+
+def route_after_save(state: AgentState) -> str:
+    return "end"
