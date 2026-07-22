@@ -89,3 +89,13 @@ def faq_node(state: AgentState) -> dict:
 
     answer = get_llm().invoke([system, human]).content
     return {"messages": [AIMessage(content=answer)]}
+
+def ask_missing_nodes(state: AgentState) -> dict:
+    merged = {**state}
+    missing = missing_fields(merged)
+    if not missing:
+        return {}
+    
+    field = missing[0]
+    question = MISSING_QUESTIONS[field]
+    return {"messages": [AIMessage(content=question)]}
