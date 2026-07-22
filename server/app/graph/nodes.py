@@ -99,3 +99,31 @@ def ask_missing_nodes(state: AgentState) -> dict:
     field = missing[0]
     question = MISSING_QUESTIONS[field]
     return {"messages": [AIMessage(content=question)]}
+
+def save_lead_node(state: AgentState) -> dict:
+    if state.get("lead_saved"):
+        return {}
+
+    if not all_fields_collected(state):
+        return {}
+
+    save_lead_summary(
+        leads_dir=settings.leads_dir,
+        session_id=state.get("session_id", "unknown"),
+        project_type=state["project_type"],
+        budget=state["budget"],
+        email=state["email"],
+        description=state["description"],
+    )
+
+    return {
+        "lead_saved": True,
+        "messages": [
+            AIMessage(
+                content=(
+                    "Dziękuję! Mam komplet informacji — zapisane. "
+                    "Przeanalizuję temat i odezwę się na podany e-mail."
+                )
+            )
+        ],
+    }
