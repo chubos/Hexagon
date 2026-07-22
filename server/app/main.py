@@ -2,9 +2,10 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from langchain_core.messages import AIMessage, HumanMessage
+from langchain_core.messages import HumanMessage
 from langgraph.checkpoint.redis import RedisSaver
 
+from app.chat_utils import ai_replies_this_turn
 from app.config import settings
 from app.graph.builder import build_graph
 from app.models import ChatRequest, ChatResponse
@@ -31,19 +32,6 @@ app.add_middleware(
 @app.get("/health")
 def health():
     return {"status": "ok"}
-
-
-def ai_replies_this_turn(messages: list, user_text: str) -> list[str]:
-    replies: list[str] = []
-    for msg in reversed(messages):
-        if isinstance(msg, HumanMessage):
-            if msg.content.strip() == user_text.strip():
-                break
-            continue
-        if isinstance(msg, AIMessage):
-            replies.append(msg.content)
-    replies.reverse()
-    return replies
 
 
 @app.post("/chat", response_model=ChatResponse)
