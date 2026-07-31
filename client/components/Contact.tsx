@@ -15,6 +15,40 @@ type ChatApiResponse = {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
+const CHAT_TOPICS = [
+  {
+    label: "Usługi (strony, aplikacje, mobile, AI)",
+    query: "Jakie usługi oferujesz?",
+  },
+  {
+    label: "Cennik i widełki budżetowe",
+    query: "Ile kosztuje strona internetowa?",
+  },
+  {
+    label: "Proces współpracy",
+    query: "Jak wygląda proces współpracy krok po kroku?",
+  },
+  {
+    label: "Doświadczenie i portfolio",
+    query: "Jakie masz doświadczenie i portfolio?",
+  },
+  {
+    label: "Lokalizacja i spotkanie na żywo",
+    query: "Gdzie działasz i czy możemy spotkać się na żywo?",
+  },
+  {
+    label: "Faktury i rozliczenia",
+    query: "Czy wystawiasz faktury?",
+  },
+  {
+    label: "Wsparcie po wdrożeniu",
+    query: "Czy po wdrożeniu pomagasz w utrzymaniu projektu?",
+  },
+  {
+    label: "Brief Twojego projektu",
+    query: "Chcę omówić mój projekt i dostać wycenę.",
+  },
+];
 
 export default function Contact() {
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -33,11 +67,8 @@ export default function Contact() {
     });
   }, [messages, loading]);
 
-  async function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-    const text = input.trim();
+  async function sendMessage(text: string) {
     if (!text || loading || done) return;
-    setInput("");
     setMessages((prev) => [...prev, { role: "user", content: text }]);
     setLoading(true);
     try {
@@ -70,6 +101,19 @@ export default function Contact() {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    const text = input.trim();
+    if (!text || loading || done) return;
+    setInput("");
+    await sendMessage(text);
+  }
+
+  function handleTopicClick(query: string) {
+    if (loading || done) return;
+    void sendMessage(query);
   }
 
   return (
@@ -111,6 +155,28 @@ export default function Contact() {
               disabled={loading || done}
             />
           </form>
+        </div>
+
+        <div className="contact-topics">
+          <h3 className="contact-topics-title">O co możesz zapytać?</h3>
+          <p className="contact-topics-intro">
+            Nie wiesz od czego zacząć? Kliknij temat, a chatbot wyśle pytanie za
+            Ciebie i odpowie na podstawie mojej bazy wiedzy.
+          </p>
+          <ul className="contact-topics-list" aria-label="Tematy rozmowy z chatbotem">
+            {CHAT_TOPICS.map((topic) => (
+              <li key={topic.label}>
+                <button
+                  type="button"
+                  className="contact-topic"
+                  onClick={() => handleTopicClick(topic.query)}
+                  disabled={loading || done}
+                >
+                  {topic.label}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <p className="contact-footer">
