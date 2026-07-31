@@ -37,7 +37,6 @@
   background-color: #ffffff;
   border: 1px solid #000000;
   border-radius: 0;
-  box-shadow: none;
 }
 
 .contact-topics-title {
@@ -67,7 +66,10 @@
   margin: 0;
 }
 
-.contact-topic {
+button.contact-topic {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
   padding: 0.625rem 1rem;
   font-family: var(--font-sans);
   font-size: 0.875rem;
@@ -83,16 +85,16 @@
     color 0.2s ease;
 }
 
-.contact-topic:hover:not(:disabled) {
+button.contact-topic:hover:not(:disabled) {
   background-color: #000000;
   color: #ffffff;
 }
 
-.contact-topic:active:not(:disabled) {
+button.contact-topic:active:not(:disabled) {
   opacity: 0.85;
 }
 
-.contact-topic:disabled {
+button.contact-topic:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
