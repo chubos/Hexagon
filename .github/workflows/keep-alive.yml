@@ -1,0 +1,16 @@
+name: Keep Render alive
+
+on:
+  schedule:
+    # Co 10 minut (UTC). Render usypia po ~15 min bez ruchu.
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render /health
+        run: curl -fsS "$RENDER_HEALTH_URL"
+        env:
+          RENDER_HEALTH_URL: ${{ secrets.RENDER_HEALTH_URL }}
