@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import "../styles/navbar.css";
 
@@ -10,9 +11,9 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="nav-container container">
-        <a href="#" className="logo" onClick={closeMenu}>
+        <Link href="/" className="logo" onClick={closeMenu}>
           Logo tu jest
-        </a>
+        </Link>
 
         <button
           type="button"
@@ -28,19 +29,19 @@ export default function Navbar() {
 
         <ul className={`nav-links ${isOpen ? "nav-links--open" : ""}`}>
           <li>
-            <a href="#o-mnie" className="nav-link" onClick={closeMenu}>
+            <Link href="/#o-mnie" className="nav-link" onClick={closeMenu}>
               O mnie
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#uslugi" className="nav-link" onClick={closeMenu}>
+            <Link href="/#uslugi" className="nav-link" onClick={closeMenu}>
               Usługi
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#kontakt" className="nav-link" onClick={closeMenu}>
+            <Link href="/#kontakt" className="nav-link" onClick={closeMenu}>
               Uruchom chatbota
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

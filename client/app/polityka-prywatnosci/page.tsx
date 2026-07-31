@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import "@/styles/polityka-prywatnosci/page.css";
 
 export const metadata = {
@@ -10,6 +11,7 @@ export const metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <>
+      <Navbar />
       <main className="privacy-page">
         <div className="container privacy-content">
           <Link href="/" className="privacy-back">
