@@ -5,6 +5,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     openai_api_key: str
+    supabase_url: str
+    supabase_secret_key: str
     redis_url: str = "redis://localhost:6379"
     chroma_path: str = "./data/chroma"
     leads_dir: str = "./data/leads"

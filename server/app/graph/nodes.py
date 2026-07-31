@@ -157,7 +157,6 @@ def save_lead_node(state: AgentState) -> dict:
         return {}
 
     save_lead_summary(
-        leads_dir=settings.leads_dir,
         session_id=state.get("session_id", "unknown"),
         project_type=state["project_type"],
         budget=state["budget"],

@@ -7,6 +7,7 @@ from langgraph.checkpoint.redis import RedisSaver
 
 from app.chat_utils import ai_replies_this_turn
 from app.config import settings
+from app.db.supabase_client import get_supabase
 from app.graph.builder import build_graph
 from app.models import ChatRequest, ChatResponse
 
@@ -53,6 +54,30 @@ def chat(body: ChatRequest):
     replies = ai_replies_this_turn(result["messages"], body.message)
     if not replies:
         replies = ["Przepraszam, coś poszło nie tak."]
+
+    try:
+        supabase = get_supabase()
+        supabase.table("chat_sessions").upsert(
+            {"session_id": body.session_id},
+            on_conflict="session_id",
+        ).execute()
+        supabase.table("chat_messages").insert(
+            {
+                "session_id": body.session_id,
+                "role": "user",
+                "content": body.message,
+            }
+        ).execute()
+        for reply in replies:
+            supabase.table("chat_messages").insert(
+                {
+                    "session_id": body.session_id,
+                    "role": "bot",
+                    "content": reply,
+                }
+            ).execute()
+    except Exception:
+        pass
 
     return ChatResponse(
         replies=replies,
