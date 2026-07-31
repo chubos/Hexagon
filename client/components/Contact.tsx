@@ -98,7 +98,11 @@ export default function Contact() {
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.detail ?? "Błąd API");
+        const detail =
+          typeof err.detail === "string"
+            ? err.detail
+            : "Błąd API";
+        throw new Error(detail);
       }
       const data = (await res.json()) as ChatApiResponse;
       setMessages((prev) => [
@@ -106,12 +110,15 @@ export default function Contact() {
         ...data.replies.map((content) => ({ role: "bot" as const, content })),
       ]);
       setDone(data.done);
-    } catch {
+    } catch (error) {
       setMessages((prev) => [
         ...prev,
         {
           role: "bot",
-          content: "Nie mogę teraz odpowiedzieć. Sprawdź, czy backend działa.",
+          content:
+            error instanceof Error
+              ? error.message
+              : "Nie mogę teraz odpowiedzieć. Sprawdź, czy backend działa.",
         },
       ]);
     } finally {

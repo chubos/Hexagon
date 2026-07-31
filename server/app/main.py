@@ -10,6 +10,7 @@ from app.config import settings
 from app.db.supabase_client import get_supabase
 from app.graph.builder import build_graph
 from app.models import ChatRequest, ChatResponse
+from app.rate_limit import enforce_rate_limit
 
 
 @asynccontextmanager
@@ -39,6 +40,8 @@ def health():
 
 @app.post("/chat", response_model=ChatResponse)
 def chat(body: ChatRequest):
+    enforce_rate_limit(body.session_id)
+
     graph = app.state.graph
     config = {"configurable": {"thread_id": body.session_id}}
 
