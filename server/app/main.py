@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from langchain_core.messages import HumanMessage
-from langgraph.checkpoint.redis import RedisSaver
+from langgraph.checkpoint.upstash_redis import UpstashRedisSaver
 
 from app.chat_utils import ai_replies_this_turn
 from app.config import settings
@@ -14,10 +14,12 @@ from app.models import ChatRequest, ChatResponse
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    with RedisSaver.from_conn_string(settings.redis_url) as checkpointer:
-        checkpointer.setup()
-        app.state.graph = build_graph(checkpointer)
-        yield
+    checkpointer = UpstashRedisSaver.from_conn_info(
+        url=settings.upstash_redis_rest_url,
+        token=settings.upstash_redis_rest_token,
+    )
+    app.state.graph = build_graph(checkpointer)
+    yield
 
 
 app = FastAPI(lifespan=lifespan)

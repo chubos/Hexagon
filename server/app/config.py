@@ -7,9 +7,10 @@ class Settings(BaseSettings):
     openai_api_key: str
     supabase_url: str
     supabase_secret_key: str
-    redis_url: str = "redis://localhost:6379"
+    upstash_redis_rest_url: str
+    upstash_redis_rest_token: str
+    redis_url: str
     chroma_path: str = "./data/chroma"
-    leads_dir: str = "./data/leads"
     knowledge_pdf: str = "./data/knowledge.pdf"
     cors_origin: str = "http://localhost:3000"
 

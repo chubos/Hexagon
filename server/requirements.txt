@@ -4,7 +4,7 @@ python-dotenv
 pydantic-settings
 redis
 langgraph
-langgraph-checkpoint-redis
+langgraph-checkpoint-upstash-redis
 langchain-openai
 langchain-chroma
 langchain-core
