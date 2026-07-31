@@ -13,11 +13,18 @@ from app.rag.retrieve import retrieve_context
 
 REQUIRED_FIELDS = ("project_type", "budget", "email", "description")
 
-MISSING_QUESTIONS = {
-    "project_type": "Nad jakim projektem pracujemy? (np. strona internetowa, aplikacja mobilna, agent AI)",
-    "budget": "Jaki jest twój budżet na projekt? ",
-    "email": "Podaj proszę swój adres e-mail — wyślę propozycję po analizie.",
-    "description": "Opisz proszę, co dokładnie projekt ma zawierać, abym mógł zaproponować odpowiednią ofertę.",
+FIELD_HINTS = {
+    "project_type": "rodzaj projektu (np. strona internetowa, aplikacja mobilna, chatbot AI)",
+    "budget": "planowany budżet na projekt",
+    "email": "adres e-mail, na który można wysłać propozycję",
+    "description": "krótki opis tego, co projekt ma zawierać",
+}
+
+FIELD_LABELS = {
+    "project_type": "Rodzaj projektu",
+    "budget": "Budżet",
+    "email": "E-mail",
+    "description": "Opis projektu",
 }
 
 def missing_fields(state: AgentState) -> list[str]:
@@ -39,8 +46,22 @@ class Extracted(BaseModel):
     email: str | None = None
     description: str | None = None
 
-def get_llm():
-    return ChatOpenAI(model="gpt-4o-mini", api_key=settings.openai_api_key, temperature=0)
+def get_llm(temperature: float = 0):
+    return ChatOpenAI(
+        model="gpt-4o-mini",
+        api_key=settings.openai_api_key,
+        temperature=temperature,
+    )
+
+def format_collected_fields(state: AgentState) -> str:
+    collected = []
+    for field in REQUIRED_FIELDS:
+        value = state.get(field)
+        if value:
+            collected.append(f"- {FIELD_LABELS[field]}: {value}")
+    if not collected:
+        return "Na razie nic nie zebrano."
+    return "\n".join(collected)
 
 def latest_user_message(state: AgentState) -> str:
     for msg in reversed(state["messages"]):
@@ -87,7 +108,7 @@ def faq_node(state: AgentState) -> dict:
     if not context.strip():
         answer = (
             "Na to pytanie nie mam jeszcze gotowej odpowiedzi w materiałach. "
-            "Chętnie odpowiem osobiście — możesz też napisać przez LinkedIn."
+            "Chętnie odpowiem osobiście lub możesz też napisać przez LinkedIn."
         )
         return {"messages": [AIMessage(content=answer)]}
 
@@ -109,10 +130,24 @@ def ask_missing_nodes(state: AgentState) -> dict:
     missing = missing_fields(merged)
     if not missing:
         return {}
-    
+
     field = missing[0]
-    question = MISSING_QUESTIONS[field]
-    return {"messages": [AIMessage(content=question)]}
+    system = SystemMessage(
+        content=(
+            "Jesteś asystentem freelancera IT na stronie portfolio. "
+            "Prowadzisz naturalną, krótką rozmowę po polsku.\n\n"
+            f"Zebrane informacje:\n{format_collected_fields(merged)}\n\n"
+            f"Teraz musisz dowiedzieć się: {FIELD_HINTS[field]}.\n\n"
+            "Zasady:\n"
+            "- Zadaj jedno pytanie o brakującą informację.\n"
+            "- Krótko nawiąż do tego, co użytkownik już napisał.\n"
+            "- Maksymalnie 2–3 zdania, bez korporacyjnego żargonu.\n"
+            "- Nie pytaj o inne brakujące pola naraz.\n"
+            "- Nie wymyślaj faktów o freelancerze ani cen."
+        )
+    )
+    answer = get_llm(temperature=0.4).invoke([system, *state["messages"]]).content
+    return {"messages": [AIMessage(content=answer)]}
 
 def save_lead_node(state: AgentState) -> dict:
     if state.get("lead_saved"):
@@ -135,7 +170,7 @@ def save_lead_node(state: AgentState) -> dict:
         "messages": [
             AIMessage(
                 content=(
-                    "Dziękuję! Mam komplet informacji — zapisane. "
+                    "Dziękuję! Mam komplet informacji, które zostały zapisane. "
                     "Przeanalizuję temat i odezwę się na podany e-mail."
                 )
             )
