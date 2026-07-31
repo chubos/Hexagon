@@ -1,0 +1,68 @@
+.privacy-page {
+  padding: clamp(6rem, 12vw, 8rem) 0 clamp(4rem, 8vw, 6rem);
+}
+
+.privacy-back {
+  display: inline-block;
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.privacy-back:hover {
+  opacity: 0.6;
+}
+
+.privacy-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.75rem;
+}
+
+.privacy-updated {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 2.5rem;
+}
+
+.privacy-content {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.privacy-section h2 {
+  font-size: 1.125rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+}
+
+.privacy-section p,
+.privacy-section li {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-color);
+}
+
+.privacy-section ul {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.privacy-section a {
+  color: var(--text-color);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.privacy-section a:hover {
+  opacity: 0.6;
+}

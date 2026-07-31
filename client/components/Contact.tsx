@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { FormEvent, useRef, useState, useEffect } from "react";
 import "../styles/contact.css";
 
@@ -14,6 +15,7 @@ type ChatApiResponse = {
 };
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const CONSENT_STORAGE_KEY = "hexagon_privacy_consent_v1";
 
 const CHAT_TOPICS = [
   {
@@ -51,14 +53,28 @@ const CHAT_TOPICS = [
 ];
 
 export default function Contact() {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: "bot", content: "Cześć! Jestem cyfrowym asystentem. Pomogę Ci określić wymagania projektu — nad czym pracujemy?" },
-  ]);
+  const [consented, setConsented] = useState(false);
+  const [consentChecked, setConsentChecked] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
-  const [sessionId] = useState(() => crypto.randomUUID());
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const chatBodyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (localStorage.getItem(CONSENT_STORAGE_KEY) === "true") {
+      setConsented(true);
+      setSessionId(crypto.randomUUID());
+      setMessages([
+        {
+          role: "bot",
+          content:
+            "Cześć! Jestem cyfrowym asystentem. Pomogę Ci określić wymagania projektu — nad czym pracujemy?",
+        },
+      ]);
+    }
+  }, []);
 
   useEffect(() => {
     chatBodyRef.current?.scrollTo({
@@ -68,7 +84,7 @@ export default function Contact() {
   }, [messages, loading]);
 
   async function sendMessage(text: string) {
-    if (!text || loading || done) return;
+    if (!text || loading || done || !consented || !sessionId) return;
     setMessages((prev) => [...prev, { role: "user", content: text }]);
     setLoading(true);
     try {
@@ -112,8 +128,22 @@ export default function Contact() {
   }
 
   function handleTopicClick(query: string) {
-    if (loading || done) return;
+    if (loading || done || !consented) return;
     void sendMessage(query);
+  }
+
+  function handleAcceptConsent() {
+    if (!consentChecked) return;
+    localStorage.setItem(CONSENT_STORAGE_KEY, "true");
+    setConsented(true);
+    setSessionId(crypto.randomUUID());
+    setMessages([
+      {
+        role: "bot",
+        content:
+          "Cześć! Jestem cyfrowym asystentem. Pomogę Ci określić wymagania projektu — nad czym pracujemy?",
+      },
+    ]);
   }
 
   return (
@@ -131,15 +161,56 @@ export default function Contact() {
 
       <div className="contact-chat-wrapper">
         <div className="chat-widget">
-        <div className="chat-body" ref={chatBodyRef} aria-label="Okno czatu">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`chat-bubble chat-bubble--${msg.role === "bot" ? "bot" : "user"}`}
+          {!consented && (
+            <div className="chat-consent" role="dialog" aria-labelledby="chat-consent-title">
+              <h3 id="chat-consent-title" className="chat-consent-title">
+                Zanim zaczniemy
+              </h3>
+              <p className="chat-consent-text">
+                Chatbot zbiera treść rozmowy oraz dane podane przez Ciebie (np.
+                e-mail), aby przygotować odpowiedź. Szczegóły znajdziesz w{" "}
+                <Link href="/polityka-prywatnosci" className="contact-link">
+                  polityce prywatności
+                </Link>
+                .
+              </p>
+              <label className="chat-consent-label">
+                <input
+                  type="checkbox"
+                  checked={consentChecked}
+                  onChange={(e) => setConsentChecked(e.target.checked)}
+                />
+                <span>
+                  Akceptuję politykę prywatności i wyrażam zgodę na
+                  przetwarzanie moich danych w celu obsługi zapytania przez
+                  chatbota.
+                </span>
+              </label>
+              <button
+                type="button"
+                className="chat-consent-button"
+                onClick={handleAcceptConsent}
+                disabled={!consentChecked}
               >
-                {msg.content}
-              </div>
-            ))}
+                Rozpocznij rozmowę
+              </button>
+            </div>
+          )}
+
+          <div
+            className={`chat-body ${!consented ? "chat-body--locked" : ""}`}
+            ref={chatBodyRef}
+            aria-label="Okno czatu"
+          >
+            {consented &&
+              messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`chat-bubble chat-bubble--${msg.role === "bot" ? "bot" : "user"}`}
+                >
+                  {msg.content}
+                </div>
+              ))}
             {loading && (
               <div className="chat-bubble chat-bubble--bot">Piszę...</div>
             )}
@@ -149,10 +220,16 @@ export default function Contact() {
             <input
               type="text"
               className="chat-input-field"
-              placeholder={done ? "Dziękuję — odezwę się na e-mail." : "Wiadomość..."}
+              placeholder={
+                !consented
+                  ? "Zaakceptuj zgodę, aby napisać wiadomość..."
+                  : done
+                    ? "Dziękuję — odezwę się na e-mail."
+                    : "Wiadomość..."
+              }
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              disabled={loading || done}
+              disabled={!consented || loading || done}
             />
           </form>
         </div>
@@ -170,7 +247,7 @@ export default function Contact() {
                   type="button"
                   className="contact-topic"
                   onClick={() => handleTopicClick(topic.query)}
-                  disabled={loading || done}
+                  disabled={loading || done || !consented}
                 >
                   {topic.label}
                 </button>

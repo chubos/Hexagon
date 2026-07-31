@@ -110,6 +110,85 @@ button.contact-topic:disabled {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+}
+
+.chat-consent {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.98);
+  border: 2px dashed #8b8b8b;
+}
+
+.chat-consent-title {
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-align: center;
+}
+
+.chat-consent-text {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.chat-consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.chat-consent-label input {
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  accent-color: #000000;
+}
+
+button.chat-consent-button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0.25rem auto 0;
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #000000;
+  border: 1px solid #000000;
+  border-radius: 0;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+button.chat-consent-button:hover:not(:disabled) {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+button.chat-consent-button:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.chat-body--locked {
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 .chat-body {
