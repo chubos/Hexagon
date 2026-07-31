@@ -14,10 +14,10 @@ from app.rag.retrieve import retrieve_context
 REQUIRED_FIELDS = ("project_type", "budget", "email", "description")
 
 MISSING_QUESTIONS = {
-    "project_type": "Nad jakim projektem pracujemy? (np. strona web, aplikacja mobilna, agent AI)",
-    "budget": "Jaki jest twój budżet na projekt? (< 1 000 PLN / 1 000–5 000 PLN / 5 000–15 000 PLN / 15 000 PLN+)",
+    "project_type": "Nad jakim projektem pracujemy? (np. strona internetowa, aplikacja mobilna, agent AI)",
+    "budget": "Jaki jest twój budżet na projekt? ",
     "email": "Podaj proszę swój adres e-mail — wyślę propozycję po analizie.",
-    "description": "Opisz krótko, co dokładnie projekt ma zawierać.",
+    "description": "Opisz proszę, co dokładnie projekt ma zawierać, abym mógł zaproponować odpowiednią ofertę.",
 }
 
 def missing_fields(state: AgentState) -> list[str]:
