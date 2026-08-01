@@ -224,20 +224,37 @@ export default function Contact() {
           </div>
 
           <form className="chat-input-bar" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              className="chat-input-field"
-              placeholder={
-                !consented
-                  ? "Zaakceptuj zgodę, aby napisać wiadomość..."
-                  : done
-                    ? "Dziękuję — odezwę się na e-mail."
-                    : "Wiadomość..."
-              }
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              disabled={!consented || loading || done}
-            />
+            <div className="chat-input-row">
+              <input
+                type="text"
+                className="chat-input-field"
+                placeholder={
+                  !consented
+                    ? "Zaakceptuj zgodę, aby napisać wiadomość..."
+                    : done
+                      ? "Dziękuję — odezwę się na e-mail."
+                      : "Wiadomość..."
+                }
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                disabled={!consented || loading || done}
+              />
+              <button
+                type="submit"
+                className="chat-send-button"
+                aria-label="Wyślij wiadomość"
+                disabled={!consented || loading || done || !input.trim()}
+              >
+                <svg
+                  className="chat-send-icon"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path d="M3.4 20.6 21 12 3.4 3.4l1.8 7.2L16 12l-10.8 1.4-1.8 7.2Z" />
+                </svg>
+              </button>
+            </div>
           </form>
         </div>
 
