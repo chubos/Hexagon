@@ -1,4 +1,5 @@
 from app.db.supabase_client import get_supabase
+from app.notifications.discord import notify_new_lead
 
 
 def save_lead_summary(
@@ -22,3 +23,14 @@ def save_lead_summary(
             "description": description,
         }
     ).execute()
+
+    try:
+        notify_new_lead(
+            session_id=session_id,
+            project_type=project_type,
+            budget=budget,
+            email=email,
+            description=description,
+        )
+    except Exception:
+        pass

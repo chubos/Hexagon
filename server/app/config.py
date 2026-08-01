@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     chroma_path: str = "./data/chroma"
     knowledge_pdf: str = "./data/knowledge.pdf"
     cors_origin: str = "http://localhost:3000"
+    discord_webhook_url: str | None = None
 
 
 settings = Settings()

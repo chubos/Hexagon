@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
           </Link>
 
           <h1 className="privacy-title">Polityka prywatności</h1>
-          <p className="privacy-updated">Ostatnia aktualizacja: 31 lipca 2026</p>
+          <p className="privacy-updated">Ostatnia aktualizacja: 1 sierpnia 2026</p>
 
           <section className="privacy-section">
             <h2>1. Administrator danych</h2>
@@ -60,7 +60,11 @@ export default function PrivacyPolicyPage() {
             <ul>
               <li>obsługi zapytania przez chatbota,</li>
               <li>przygotowania oferty lub odpowiedzi na Twoje zapytanie,</li>
-              <li>kontaktu zwrotnego na podany adres e-mail.</li>
+              <li>kontaktu zwrotnego na podany adres e-mail,</li>
+              <li>
+                powiadomienia Administratora o nowym zapytaniu (leadzie), aby
+                mógł szybko na nie odpowiedzieć.
+              </li>
             </ul>
             <p style={{ marginTop: "0.75rem" }}>
               Podstawą prawną jest Twoja zgoda (art. 6 ust. 1 lit. a RODO),
@@ -77,17 +81,26 @@ export default function PrivacyPolicyPage() {
               w świadczeniu usług, w tym:
             </p>
             <ul>
-              <li>dostawcy hostingu i infrastruktury serwerowej,</li>
+              <li>dostawcy hostingu i infrastruktury serwerowej (Render, Cloudflare),</li>
               <li>Supabase (baza danych — przechowywanie rozmów i leadów),</li>
               <li>
                 OpenAI (przetwarzanie treści wiadomości w celu wygenerowania
                 odpowiedzi chatbota),
               </li>
-              <li>Redis (tymczasowe przechowywanie stanu rozmowy).</li>
+              <li>Upstash (Redis — tymczasowe przechowywanie stanu rozmowy),</li>
+              <li>
+                Discord Inc. (powiadomienia o nowych leadach — na prywatny kanał
+                Administratora trafiają m.in. typ projektu, budżet, adres
+                e-mail, opis i identyfikator sesji).
+              </li>
             </ul>
             <p style={{ marginTop: "0.75rem" }}>
               Podmioty te przetwarzają dane wyłącznie na polecenie Administratora
-              i zgodnie z obowiązującymi umowami powierzenia przetwarzania danych.
+              i zgodnie z obowiązującymi umowami powierzenia przetwarzania danych
+              (w stosownych przypadkach). Część dostawców (np. OpenAI, Discord,
+              Supabase) może przetwarzać dane poza Europejskim Obszarem
+              Gospodarczym — wtedy stosowane są mechanizmy przewidziane RODO
+              (np. standardowe klauzule umowne).
             </p>
           </section>
 
