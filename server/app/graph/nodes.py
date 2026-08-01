@@ -14,11 +14,20 @@ from app.rag.retrieve import retrieve_context
 REQUIRED_FIELDS = ("project_type", "budget", "email", "description")
 
 FIELD_HINTS = {
-    "project_type": "rodzaj projektu (np. strona internetowa, aplikacja mobilna, chatbot AI)",
+    "project_type": "ogólna kategoria projektu (wystarczy np. strona, aplikacja, AI — bez doprecyzowania)",
     "budget": "planowany budżet na projekt",
     "email": "adres e-mail, na który można wysłać propozycję",
     "description": "krótki opis tego, co projekt ma zawierać",
 }
+
+PROJECT_TYPE_CATEGORIES = (
+    "Strona WWW",
+    "Aplikacja webowa",
+    "Aplikacja mobilna",
+    "AI / automatyzacja",
+    "Integracja / backend",
+    "Inne",
+)
 
 FIELD_LABELS = {
     "project_type": "Rodzaj projektu",
@@ -69,6 +78,14 @@ def latest_user_message(state: AgentState) -> str:
             return msg.content.strip()
     return ""
 
+def apply_field_updates(extracted: Extracted) -> dict[str, str]:
+    updates: dict[str, str] = {}
+    for field in REQUIRED_FIELDS:
+        value = getattr(extracted, field)
+        if value:
+            updates[field] = value.strip()
+    return updates
+
 def extract_node(state: AgentState) -> dict:
     user_text = latest_user_message(state)
     updates: dict = {"last_intent": "intake"}
@@ -76,16 +93,26 @@ def extract_node(state: AgentState) -> dict:
     if email_match and EMAIL_RE.match(email_match.group(0)):
         updates["email"] = email_match.group(0)
     llm = get_llm().with_structured_output(Extracted)
+    categories = ", ".join(PROJECT_TYPE_CATEGORIES)
     prompt = f"""
-Wyciągnij dane leada z wiadomości użytkownika (po polsku).
-Uzupełnij tylko pola, które wynikają wprost z tekstu.
+Wyciągnij dane leada z OSTATNIEJ wiadomości użytkownika (po polsku).
+
+Zebrane dotychczas:
+{format_collected_fields(state)}
 
 intent:
 - faq = WYŁĄCZNIE pytanie o freelancera, usługi, doświadczenie, lokalizację, sposób współpracy
 - intake = podaje dane projektu, budżet, e-mail, opis LUB odpowiada na pytania z briefu
 - unknown = traktuj jak intake
 
-Zasada: jeśli użytkownik podaje informacje o projekcie (np. typ, budżet, e-mail), intent MUSI być intake, nie faq.
+Zasady pól:
+- Zwróć TYLKO pola, które użytkownik podaje lub POPRAWIA w tej wiadomości. Pozostałe zostaw puste.
+- Jeśli użytkownik poprawia wcześniejszą informację (np. "zmieniam budżet na 10 tys.", "jednak aplikacja mobilna"), zwróć nową wartość — nadpisze poprzednią.
+- project_type: ustaw JEDNĄ ogólną kategorię z listy: {categories}.
+  Krótka odpowiedź użytkownika wystarczy — nie wymagaj szczegółów. Przykłady:
+  "machine learning" → "AI / automatyzacja"; "strona" → "Strona WWW"; "apka na telefon" → "Aplikacja mobilna".
+- Jeśli użytkownik opisuje szczegóły projektu w tej samej wiadomości, uzupełnij też description.
+- Jeśli użytkownik podaje informacje o projekcie, intent MUSI być intake, nie faq.
 
 Wiadomość:
 {user_text}
@@ -95,10 +122,7 @@ Wiadomość:
     if intent == "unknown":
         intent = "intake"
     updates["last_intent"] = intent
-    for field in REQUIRED_FIELDS:
-        value = getattr(extracted, field)
-        if value and not state.get(field):
-            updates[field] = value.strip()
+    updates.update(apply_field_updates(extracted))
     return updates
 
 def faq_node(state: AgentState) -> dict:
@@ -132,6 +156,12 @@ def ask_missing_nodes(state: AgentState) -> dict:
         return {}
 
     field = missing[0]
+    project_type_hint = ""
+    if field == "project_type":
+        project_type_hint = (
+            "\n- Pytaj ogólnie o rodzaj projektu — zaakceptuj krótką odpowiedź "
+            "(np. strona, aplikacja, AI). Nie proś o doprecyzowanie technologii ani zakresu.\n"
+        )
     system = SystemMessage(
         content=(
             "Jesteś asystentem freelancera IT na stronie portfolio. "
@@ -144,6 +174,7 @@ def ask_missing_nodes(state: AgentState) -> dict:
             "- Maksymalnie 2–3 zdania, bez korporacyjnego żargonu.\n"
             "- Nie pytaj o inne brakujące pola naraz.\n"
             "- Nie wymyślaj faktów o freelancerze ani cen."
+            f"{project_type_hint}"
         )
     )
     answer = get_llm(temperature=0.4).invoke([system, *state["messages"]]).content
