@@ -30,7 +30,7 @@
 }
 
 .contact-topics {
-  width: 100%;
+  width: 90%;
   max-width: 600px;
   margin-top: 1.5rem;
   padding: 1.375rem 1.5rem 1.5rem;
@@ -100,7 +100,7 @@ button.contact-topic:disabled {
 }
 
 .chat-widget {
-  width: 100%;
+  width: 90%;
   max-width: 600px;
   height: 500px;
   border: 1px solid rgba(0, 0, 0, 0.06);
@@ -309,7 +309,7 @@ button.chat-send-button:disabled {
   font-size: 0.875rem;
   color: rgba(0, 0, 0, 0.6);
   text-align: center;
-  max-width: 600px;
+  max-width: 90%;
 }
 
 .contact-link {
@@ -324,7 +324,7 @@ button.chat-send-button:disabled {
 
 @media (max-width: 768px) {
   .chat-widget {
-    height: min(500px, 70vh);
+    height: min(450px, 70vh);
     border-radius: 16px;
   }
 

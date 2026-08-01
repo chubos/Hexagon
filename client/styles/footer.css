@@ -31,12 +31,12 @@
 
 .site-footer-link {
   font-size: 0.8125rem;
-  color: rgba(0, 0, 0, 0.6);
+  color: var(--text-color);
   text-decoration: none;
-  transition: opacity 0.2s ease;
+  text-underline-offset: 3px;
 }
 
 .site-footer-link:hover {
   opacity: 0.6;
-  color: var(--text-color);
+  transition: opacity 0.2s ease;
 }
