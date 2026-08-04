@@ -14,7 +14,7 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="container site-footer-inner">
-        <p className="site-footer-brand">designed by hexagon</p>
+        <p className="site-footer-brand">Hexagon Studio</p>
 
         <ul className="site-footer-links">
           {NAV_LINKS.map((link) => (

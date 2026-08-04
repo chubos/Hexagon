@@ -2,27 +2,27 @@ import "../styles/services.css";
 const services = [
   {
     id: "01",
-    title: "Web Development",
+    title: "Strony i aplikacje webowe",
     description:
-      "Strony i Aplikacje Webowe. Szybkie, bezpieczne i zoptymalizowane pod kątem konwersji strony wizytówkowe oraz zaawansowane aplikacje webowe oparte na architekturze Next.js.",
+      "Tworzenie stron internetowych i aplikacji webowych w Rzeszowie oraz zdalnie. Szybkie, bezpieczne i zoptymalizowane pod konwersję wizytówki oraz zaawansowane systemy na Next.js.",
   },
   {
     id: "02",
-    title: "Mobile Apps",
+    title: "Aplikacje mobilne",
     description:
-      "Aplikacje Mobilne. Płynnie działające i skalowalne rozwiązania na systemy iOS oraz Android, stworzone w oparciu o jeden kod w React Native.",
+      "Aplikacje mobilne na iOS i Android w React Native — jeden kod, płynne działanie i skalowalność pod rozwój produktu.",
   },
   {
     id: "03",
     title: "Machine Learning",
     description:
-      "Uczenie Maszynowe. Integracja sztucznej inteligencji z procesami biznesowymi. Prognozowanie trendów, klasyfikacja danych i wyciąganie wniosków tam, gdzie człowiek widzi tylko chaos.",
+      "Uczenie maszynowe i integracja AI z procesami biznesowymi: prognozowanie, klasyfikacja danych i automatyzacja decyzji.",
   },
   {
     id: "04",
-    title: "AI Agents & Bots",
+    title: "Agenty AI i chatboty",
     description:
-      "Autonomiczne Agenty i Chatboty. Projektowanie inteligentnych asystentów nowej generacji. Buduję systemy oparte o LLM, które potrafią same analizować zapytania, rozumieć kontekst oraz korzystać z zewnętrznych narzędzi i automatyzować obsługę klienta.",
+      "Autonomiczne agenty i chatboty oparte o LLM — analiza zapytań, kontekst rozmowy, narzędzia zewnętrzne i automatyzacja obsługi klienta.",
   },
 ];
 

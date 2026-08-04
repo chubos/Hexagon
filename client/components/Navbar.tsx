@@ -12,7 +12,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="nav-container container">
         <Link href="/" className="logo" onClick={closeMenu}>
-          Logo tu jest
+          Hexagon Studio
         </Link>
 
         <button
