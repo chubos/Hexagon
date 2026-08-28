@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "Hexagon Studio",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://hexagonstudio.pl",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://hexagon-studio.pl",
   locale: "pl_PL",
-  email: "info@hexagon.com",
+  email: "kontakt@hexagon-studio.pl",
   description:
     "Hexagon Studio — tworzenie stron internetowych, aplikacji webowych i mobilnych oraz agentów AI. Freelancer IT w Rzeszowie i zdalnie w całej Polsce.",
   keywords: [
