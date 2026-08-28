@@ -1,8 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import JsonLd from "@/components/JsonLd";
 import { siteConfig } from "@/lib/site";
 import "../styles/styles.css";
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+  viewportFit: "cover",
+  colorScheme: "light dark",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
