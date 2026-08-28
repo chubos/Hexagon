@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import "../styles/navbar.css";
@@ -11,8 +12,29 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="nav-container container">
-        <Link href="/" className="logo" onClick={closeMenu}>
-          Hexagon Studio
+        <Link
+          href="/"
+          className="logo"
+          onClick={closeMenu}
+          aria-label="Hexagon Studio"
+        >
+          <Image
+            src="/brand/logo-on-light.svg"
+            alt="Hexagon Studio"
+            width={160}
+            height={80}
+            className="logo-img logo-img--on-light"
+            priority
+          />
+          <Image
+            src="/brand/logo-on-dark.svg"
+            alt=""
+            width={160}
+            height={80}
+            className="logo-img logo-img--on-dark"
+            aria-hidden
+            priority
+          />
         </Link>
 
         <button

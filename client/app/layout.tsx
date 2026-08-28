@@ -43,6 +43,25 @@ export const metadata: Metadata = {
     },
   },
   category: "technology",
+  icons: {
+    icon: [
+      {
+        url: "/brand/symbol-on-light.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/brand/symbol-on-dark.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    apple: "/brand/symbol-on-light.svg",
+  },
 };
 
 export default function RootLayout({

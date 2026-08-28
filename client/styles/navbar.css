@@ -14,17 +14,37 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 4rem;
+  padding-block: 0.7rem;
   position: relative;
 }
 
 .logo {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 0.875rem;
-  letter-spacing: 0.05em;
-  color: var(--text-color);
+  display: inline-flex;
+  align-items: center;
   z-index: 101;
+  text-decoration: none;
+  line-height: 0;
+  padding-block: 0.1rem;
+}
+
+.logo-img {
+  width: auto;
+  height: 4rem;
+  display: block;
+}
+
+.logo-img--on-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-img--on-light {
+    display: none;
+  }
+
+  .logo-img--on-dark {
+    display: block;
+  }
 }
 
 /* === Linki — desktop === */
@@ -35,7 +55,7 @@
 }
 
 .nav-link {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-color);
   transition: opacity 0.2s ease;
