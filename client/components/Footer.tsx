@@ -2,7 +2,7 @@ import Link from "next/link";
 import "../styles/footer.css";
 
 const GITHUB_URL = "https://github.com/chubos";
-const LINKEDIN_URL = "https://www.linkedin.com/in/";
+const LINKEDIN_URL = "https://www.linkedin.com/in/hubert-lech-642380376";
 
 const NAV_LINKS = [
   { href: "/#o-mnie", label: "O mnie" },

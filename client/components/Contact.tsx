@@ -283,7 +283,7 @@ export default function Contact() {
         <p className="contact-footer">
           Jeśli wolisz tradycyjne metody, znajdziesz mnie również na{" "}
           <a
-            href="https://www.linkedin.com/in/"
+            href="https://www.linkedin.com/in/hubert-lech-642380376"
             target="_blank"
             rel="noopener noreferrer"
             className="contact-link"
