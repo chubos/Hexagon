@@ -34,13 +34,13 @@ public/brand/              # wersje używane w UI (przezroczyste)
 ```
 
 <p align="center">
-  <img src="assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20light.svg" alt="Logo poziome — jasne" width="420" />
+  <img src="assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20light%20full.svg" alt="Logo poziome — jasne" width="420" />
 </p>
 
 <p align="center"><em>Logo poziome — wariant jasny.</em></p>
 
 <p align="center">
-  <img src="assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20dark.svg" alt="Logo poziome — ciemne" width="420" />
+  <img src="assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20dark%20full.svg" alt="Logo poziome — ciemne" width="420" />
 </p>
 
 <p align="center"><em>Logo poziome — wariant ciemny.</em></p>

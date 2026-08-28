@@ -17,13 +17,13 @@ Hexagon/
 ## Brand / logo
 
 <p align="center">
-  <img src="client/assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20light.svg" alt="Hexagon Studio — logo poziome (wersja jasna)" width="480" />
+  <img src="client/assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20light%20full.svg" alt="Hexagon Studio — logo poziome (wersja jasna)" width="480" />
 </p>
 
 <p align="center"><em>Logo poziome na jasnym wariancie — symbol + napis HEXAGON obok siebie.</em></p>
 
 <p align="center">
-  <img src="client/assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20dark.svg" alt="Hexagon Studio — logo poziome (wersja ciemna)" width="480" />
+  <img src="client/assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20dark%20full.svg" alt="Hexagon Studio — logo poziome (wersja ciemna)" width="480" />
 </p>
 
 <p align="center"><em>Logo poziome na ciemnym wariancie — ten sam układ, jasny kolor znaku.</em></p>
