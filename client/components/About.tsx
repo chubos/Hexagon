@@ -2,9 +2,11 @@ import "../styles/about.css";
 
 export default function About() {
   return (
-    <section id="o-mnie" className="about">
+    <section className="about">
       <div className="container about-grid">
-        <h2 className="about-label">O MNIE</h2>
+        <h2 id="o-mnie" className="about-label scroll-target">
+          O MNIE
+        </h2>
 
         <div className="about-content">
           <p className="about-text">

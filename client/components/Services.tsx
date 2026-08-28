@@ -28,9 +28,11 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="uslugi" className="services">
+    <section className="services">
       <div className="container">
-        <h2 className="services-title">Kompetencje</h2>
+        <h2 id="uslugi" className="services-title scroll-target">
+          Kompetencje
+        </h2>
         <div className="services-grid">
           {services.map((service) => (
             <article key={service.id} className="service-card">

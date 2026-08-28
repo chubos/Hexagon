@@ -154,9 +154,11 @@ export default function Contact() {
   }
 
   return (
-    <section id="kontakt" className="contact">
+    <section className="contact">
       <div className="container contact-header">
-        <h2 className="contact-title">Masz projekt w głowie? Zbudujmy go.</h2>
+        <h2 id="kontakt" className="contact-title scroll-target">
+          Masz projekt w głowie? Zbudujmy go.
+        </h2>
         <p className="contact-intro">
           Nie traćmy czasu na wymianę dziesiątek maili i niepotrzebne telefony.
           Poniżej znajduje się chatbot, którego sam zaprojektowałem i wdrożyłem.
