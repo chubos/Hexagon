@@ -24,21 +24,40 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 
 ## Brand
 
+Pełne eksporty (z tłami) i źródła Affinity:
+
 ```
-public/
-├── favicon.svg                 # fallback favicon (light/dark w CSS)
-└── brand/
-    ├── logo-on-light.svg       # navbar — jasny motyw
-    ├── logo-on-dark.svg        # navbar — ciemny motyw
-    ├── symbol-on-light.svg     # favicon — czarny symbol
-    └── symbol-on-dark.svg      # favicon — biały symbol
+assets/
+├── affinity/              # pliki .af
+└── Hexagon symbols/       # SVG (poziome, full logo, symbole)
+public/brand/              # wersje używane w UI (przezroczyste)
 ```
 
-Logo w navbarze i favicon przełączają się przez `prefers-color-scheme`.
+<p align="center">
+  <img src="assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20light.svg" alt="Logo poziome — jasne" width="420" />
+</p>
 
-![Logo](public/brand/logo-on-light.svg)
+<p align="center"><em>Logo poziome — wariant jasny.</em></p>
 
-![Symbol](public/brand/symbol-on-light.svg)
+<p align="center">
+  <img src="assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20dark.svg" alt="Logo poziome — ciemne" width="420" />
+</p>
+
+<p align="center"><em>Logo poziome — wariant ciemny.</em></p>
+
+<p align="center">
+  <img src="assets/Hexagon%20symbols/Hexagon%20light%20logo.svg" alt="Logo z napisem — białe tło" width="240" />
+</p>
+
+<p align="center"><em>Logo z napisem w środku — białe tło.</em></p>
+
+<p align="center">
+  <img src="assets/Hexagon%20symbols/Hexagon%20dark%20logo.svg" alt="Logo z napisem — czarne tło" width="240" />
+</p>
+
+<p align="center"><em>Logo z napisem w środku — czarne tło.</em></p>
+
+Navbar i favicon biorą przezroczyste pliki z `public/brand/` i przełączają się przez `prefers-color-scheme`.
 
 ## SEO
 

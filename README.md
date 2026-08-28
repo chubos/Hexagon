@@ -6,29 +6,39 @@ Strona freelancera IT (Rzeszów / zdalnie) + backend chatbota leadowego.
 
 ```
 Hexagon/
-├── client/          # Next.js
-├── server/          # FastAPI + LangGraph (chatbot)
+├── client/          # Next.js (frontend)
+│   ├── public/brand/           # SVG używane na stronie
+│   └── assets/
+│       ├── Hexagon symbols/    # pełny zestaw eksportów SVG
+│       └── affinity/           # źródła Affinity (.af)
+└── server/          # FastAPI + LangGraph (chatbot)
 ```
 
 ## Brand / logo
 
-Wyeksportowane SVG (używane na stronie):
-
-| Plik                                      | Zastosowanie                          |
-| ----------------------------------------- | ------------------------------------- |
-| `client/public/brand/logo-on-light.svg`   | Navbar — motyw jasny (ciemne logo)    |
-| `client/public/brand/logo-on-dark.svg`    | Navbar — motyw ciemny (jasne logo)    |
-| `client/public/brand/symbol-on-light.svg` | Favicon — motyw jasny (czarny symbol) |
-| `client/public/brand/symbol-on-dark.svg`  | Favicon — motyw ciemny (biały symbol) |
-| `client/public/favicon.svg`               | Favicon fallback (auto light/dark)    |
-
 <p align="center">
-  <img src="client/public/brand/logo-on-light.svg" alt="Hexagon Studio logo" width="320" />
+  <img src="client/assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20light.svg" alt="Hexagon Studio — logo poziome (wersja jasna)" width="480" />
 </p>
 
+<p align="center"><em>Logo poziome na jasnym wariancie — symbol + napis HEXAGON obok siebie.</em></p>
+
 <p align="center">
-  <img src="client/public/brand/symbol-on-light.svg" alt="Hexagon symbol" width="64" />
+  <img src="client/assets/Hexagon%20symbols/Hexagon%20logo%20horizontal%20dark.svg" alt="Hexagon Studio — logo poziome (wersja ciemna)" width="480" />
 </p>
+
+<p align="center"><em>Logo poziome na ciemnym wariancie — ten sam układ, jasny kolor znaku.</em></p>
+
+<p align="center">
+  <img src="client/assets/Hexagon%20symbols/Hexagon%20light%20logo.svg" alt="Hexagon Studio — logo z napisem (białe tło)" width="280" />
+</p>
+
+<p align="center"><em>Logo z napisem w środku na białym tle — wariant do jasnych powierzchni.</em></p>
+
+<p align="center">
+  <img src="client/assets/Hexagon%20symbols/Hexagon%20dark%20logo.svg" alt="Hexagon Studio — logo z napisem (czarne tło)" width="280" />
+</p>
+
+<p align="center"><em>Logo z napisem w środku na czarnym tle — wariant do ciemnych powierzchni.</em></p>
 
 ## Uruchomienie lokalne
 
