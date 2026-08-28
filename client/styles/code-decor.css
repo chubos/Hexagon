@@ -1,0 +1,53 @@
+.code-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.code-decor-mark {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: var(--s);
+  font-weight: 200;
+  line-height: 1;
+  color: var(--decor-color);
+  white-space: nowrap;
+  max-width: 36vw;
+  overflow: hidden;
+  transform: rotate(var(--r, 0deg));
+}
+
+.code-decor-mark--tl {
+  top: var(--y);
+  left: var(--x);
+}
+
+.code-decor-mark--tr {
+  top: var(--y);
+  right: var(--x);
+}
+
+.code-decor-mark--bl {
+  bottom: var(--y);
+  left: var(--x);
+}
+
+.code-decor-mark--br {
+  bottom: var(--y);
+  right: var(--x);
+}
+
+@media (max-width: 768px) {
+  .code-decor {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .code-decor-mark {
+    color: #fff;
+  }
+}

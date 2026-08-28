@@ -1,8 +1,10 @@
+import CodeDecor from "@/components/CodeDecor";
 import "../styles/hero.css";
 
 export default function Hero() {
   return (
     <section className="hero">
+      <CodeDecor />
       <div className="container hero-content">
         <h1 className="hero-title">
           Kod, który myśli. Aplikacje, które działają.

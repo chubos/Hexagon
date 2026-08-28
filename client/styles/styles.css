@@ -23,6 +23,8 @@
   --chat-user-bg: #007aff;
   --chat-user-color: #ffffff;
 
+  --decor-color: var(--accent-color);
+
   --font-sans: system-ui, sans-serif;
   --font-mono: monospace;
 }
@@ -36,6 +38,7 @@
     --muted-color: rgba(255, 255, 255, 0.62);
     --muted-soft: rgba(255, 255, 255, 0.5);
     --hover-fill: rgba(255, 255, 255, 0.08);
+      --decor-color: rgba(255, 255, 255, 0.48);
 
     --surface-color: #141414;
     --surface-muted: #1c1c1c;
