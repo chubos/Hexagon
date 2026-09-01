@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
+import ThemeToggle from "@/components/ThemeToggle";
 import "../styles/navbar.css";
 
 export default function Navbar() {
@@ -42,18 +44,6 @@ export default function Navbar() {
           />
         </Link>
 
-        <button
-          type="button"
-          className={`nav-toggle ${isOpen ? "nav-toggle--open" : ""}`}
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? "Zamknij menu" : "Otwórz menu"}
-          aria-expanded={isOpen}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
         <ul className={`nav-links ${isOpen ? "nav-links--open" : ""}`}>
           <li>
             <Link href="/#o-mnie" className="nav-link" onClick={closeMenu}>
@@ -70,7 +60,22 @@ export default function Navbar() {
               Uruchom chatbota
             </Link>
           </li>
+          <li className="nav-theme">
+            <ThemeToggle />
+          </li>
         </ul>
+
+        <button
+          type="button"
+          className={`nav-toggle ${isOpen ? "nav-toggle--open" : ""}`}
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label={isOpen ? "Zamknij menu" : "Otwórz menu"}
+          aria-expanded={isOpen}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </nav>
   );

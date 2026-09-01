@@ -1,5 +1,6 @@
-:root {
-  color-scheme: light dark;
+:root,
+[data-theme="light"] {
+  color-scheme: light;
 
   --bg-color: #ffffff;
   --text-color: #000000;
@@ -29,31 +30,31 @@
   --font-mono: monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #0a0a0a;
-    --text-color: #f2f2f2;
-    --accent-color: #f2f2f2;
-    --border-color: rgba(255, 255, 255, 0.16);
-    --muted-color: rgba(255, 255, 255, 0.62);
-    --muted-soft: rgba(255, 255, 255, 0.5);
-    --hover-fill: rgba(255, 255, 255, 0.08);
-      --decor-color: rgba(255, 255, 255, 0.48);
+[data-theme="dark"] {
+  color-scheme: dark;
 
-    --surface-color: #141414;
-    --surface-muted: #1c1c1c;
-    --nav-bg: rgba(10, 10, 10, 0.72);
-    --nav-menu-bg: rgba(10, 10, 10, 0.96);
+  --bg-color: #0a0a0a;
+  --text-color: #f2f2f2;
+  --accent-color: #f2f2f2;
+  --border-color: rgba(255, 255, 255, 0.32);
+  --muted-color: rgba(255, 255, 255, 0.62);
+  --muted-soft: rgba(255, 255, 255, 0.5);
+  --hover-fill: rgba(255, 255, 255, 0.08);
+  --decor-color: #ffffff;
 
-    --chat-border: rgba(255, 255, 255, 0.1);
-    --chat-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-    --chat-consent-bg: rgba(20, 20, 20, 0.98);
-    --chat-consent-border: #6b6b6b;
-    --chat-bot-bg: #2c2c2e;
-    --chat-bot-color: #f2f2f7;
-    --chat-user-bg: #0a84ff;
-    --chat-user-color: #ffffff;
-  }
+  --surface-color: #141414;
+  --surface-muted: #1c1c1c;
+  --nav-bg: rgba(10, 10, 10, 0.72);
+  --nav-menu-bg: rgba(10, 10, 10, 0.96);
+
+  --chat-border: rgba(255, 255, 255, 0.1);
+  --chat-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  --chat-consent-bg: rgba(20, 20, 20, 0.98);
+  --chat-consent-border: #6b6b6b;
+  --chat-bot-bg: #2c2c2e;
+  --chat-bot-color: #f2f2f7;
+  --chat-user-bg: #0a84ff;
+  --chat-user-color: #ffffff;
 }
 
 *,

@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
           <section className="privacy-section">
             <h2>1. Administrator danych</h2>
             <p>
-              Administratorem Twoich danych osobowych jest Hexagon Studio (dalej:
+              Administratorem Twoich danych osobowych jest Hubert Lech (dalej:
               „Administrator”). W sprawach związanych z ochroną danych możesz
               skontaktować się z Administratorem przez adres e-mail: <a href="mailto:info@hexagon.com">info@hexagon.com</a>
             </p>

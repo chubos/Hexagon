@@ -45,9 +45,3 @@
     display: none;
   }
 }
-
-@media (prefers-color-scheme: dark) {
-  .code-decor-mark {
-    color: #fff;
-  }
-}

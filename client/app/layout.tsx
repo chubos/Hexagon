@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 
 import JsonLd from "@/components/JsonLd";
 import { siteConfig } from "@/lib/site";
+import { themeInitScript } from "@/lib/theme";
 import "../styles/styles.css";
 
 export const viewport: Viewport = {
@@ -79,7 +80,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pl">
+    <html lang="pl" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
+      </head>
       <body>
         <JsonLd />
         {children}

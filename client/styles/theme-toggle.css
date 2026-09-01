@@ -1,0 +1,76 @@
+.theme-toggle {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  width: 5.75rem;
+  height: 1.75rem;
+  padding: 0.125rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background-color: transparent;
+  flex-shrink: 0;
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 0.125rem;
+  bottom: 0.125rem;
+  left: 0.125rem;
+  width: calc((100% - 0.25rem) / 3);
+  border-radius: 999px;
+  background-color: var(--hover-fill);
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:not(.theme-toggle--ready) .theme-toggle-thumb {
+  transition: none;
+}
+
+.theme-toggle-option {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-color);
+  cursor: pointer;
+}
+
+.theme-toggle-option--active {
+  color: var(--text-color);
+}
+
+.theme-toggle-option:hover {
+  color: var(--text-color);
+}
+
+.theme-toggle-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  display: block;
+}
+
+[data-theme="dark"] .theme-toggle {
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+[data-theme="dark"] .theme-toggle-thumb {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+
+[data-theme="dark"] .theme-toggle-option {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+[data-theme="dark"] .theme-toggle-option--active,
+[data-theme="dark"] .theme-toggle-option:hover {
+  color: #ffffff;
+}
