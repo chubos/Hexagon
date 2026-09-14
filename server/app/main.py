@@ -38,6 +38,16 @@ def health():
     return {"status": "ok"}
 
 
+@app.get("/keepalive")
+def keepalive():
+    """Lekki ping do Supabase — do crona, żeby darmowy projekt się nie pauzował."""
+    try:
+        get_supabase().table("leads").select("id").limit(1).execute()
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    return {"status": "ok", "supabase": "ok"}
+
+
 @app.post("/chat", response_model=ChatResponse)
 def chat(body: ChatRequest):
     enforce_rate_limit(body.session_id)

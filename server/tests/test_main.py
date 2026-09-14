@@ -2,6 +2,12 @@ def test_health(client):
     assert client.get("/health").json() == {"status": "ok"}
 
 
+def test_keepalive(client):
+    response = client.get("/keepalive")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok", "supabase": "ok"}
+
+
 def test_chat(client):
     response = client.post("/chat", json={"session_id": "s1", "message": "Cześć"})
 

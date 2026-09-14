@@ -1,0 +1,22 @@
+name: Keepalive
+
+on:
+  schedule:
+    # co 3 dni o 06:00 UTC — wystarczy przeciw pauzie free Supabase
+    - cron: "0 6 */3 * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping backend /keepalive
+        env:
+          BACKEND_URL: ${{ secrets.BACKEND_URL }}
+        run: |
+          if [ -z "$BACKEND_URL" ]; then
+            echo "Missing secret BACKEND_URL"
+            exit 1
+          fi
+          curl -fsS --retry 2 --retry-delay 5 --max-time 90 \
+            "${BACKEND_URL%/}/keepalive"
