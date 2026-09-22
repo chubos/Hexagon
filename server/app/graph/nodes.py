@@ -109,9 +109,12 @@ Zasady pól:
 - Zwróć TYLKO pola, które użytkownik podaje lub POPRAWIA w tej wiadomości. Pozostałe zostaw puste.
 - Jeśli użytkownik poprawia wcześniejszą informację (np. "zmieniam budżet na 10 tys.", "jednak aplikacja mobilna"), zwróć nową wartość — nadpisze poprzednią.
 - project_type: ustaw JEDNĄ ogólną kategorię z listy: {categories}.
-  Krótka odpowiedź użytkownika wystarczy — nie wymagaj szczegółów. Przykłady:
-  "machine learning" → "AI / automatyzacja"; "strona" → "Strona WWW"; "apka na telefon" → "Aplikacja mobilna".
-- Jeśli użytkownik opisuje szczegóły projektu w tej samej wiadomości, uzupełnij też description.
+  Krótka odpowiedź wystarczy. Literówki też się liczą — popraw je do najbliższej kategorii, np.
+  "apliakcja"/"apliikacja" → aplikacja; "moblina" → mobilna; "apka na telefon" → "Aplikacja mobilna";
+  "strona" → "Strona WWW"; "machine learning" / "agent ai" → "AI / automatyzacja".
+  "Inne" tylko gdy naprawdę nie pasuje do żadnej kategorii.
+- description: uzupełnij TYLKO gdy użytkownik opisuje, na czym projekt ma polegać (cel, zakres).
+  Sama nazwa typu ("agent AI", "strona", "chatbot") to NIE opis.
 - Jeśli użytkownik podaje informacje o projekcie, intent MUSI być intake, nie faq.
 
 Wiadomość:
@@ -159,8 +162,8 @@ def ask_missing_nodes(state: AgentState) -> dict:
     project_type_hint = ""
     if field == "project_type":
         project_type_hint = (
-            "\n- Pytaj ogólnie o rodzaj projektu — zaakceptuj krótką odpowiedź "
-            "(np. strona, aplikacja, AI). Nie proś o doprecyzowanie technologii ani zakresu.\n"
+            "\n- Pytaj ogólnie o rodzaj projektu — zaakceptuj krótką odpowiedź i literówki "
+            "(np. strona, apliakcja, AI). Nie proś o doprecyzowanie technologii ani zakresu.\n"
         )
     system = SystemMessage(
         content=(
