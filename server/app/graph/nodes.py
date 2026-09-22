@@ -57,7 +57,7 @@ class Extracted(BaseModel):
 
 def get_llm(temperature: float = 0):
     return ChatOpenAI(
-        model="gpt-4o-mini",
+        model="gpt-5.6-terra",
         api_key=settings.openai_api_key,
         temperature=temperature,
     )
